@@ -7,7 +7,7 @@ class Complex:
         self.b = imag
 
     def conv(self):
-        return Polar(m.sqrt(self.a**2 + self.b**2), m.atan(self.b/self.a)*180)
+        return Polar(m.sqrt(self.a**2 + self.b**2), m.atan(self.b/self.a)*(180/m.pi))
 
     def print(self):
         if self.b >= 0: sign = "+"
