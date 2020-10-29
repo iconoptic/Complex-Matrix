@@ -7,7 +7,7 @@ class Complex:
         self.b = imag
 
     def conv(self):
-        return Polar(m.sqrt(self.a**2 + self.b**2), m.atan(self.b/self.a))
+        return Polar(m.sqrt(self.a**2 + self.b**2), m.atan(self.b/self.a)*180)
 
     def print(self):
         if self.b >= 0: sign = "+"
@@ -60,22 +60,6 @@ def cDif (c1, c2):
 def crProd (c, r):
     return Complex(c.a*r, c.b*r)
 
-#
-def subArr(arr, exclude):
-    subArr = []
-    for i in range(len(arr)-1):
-        subArr.append([])
-    i = 0
-    j = 0
-    for x in range(len(arr[0])):
-        for y in range(1, len(arr)):
-            if x != exclude:
-                subArr[i].append(arr[x][y])
-                i += 1
-                if y == len(arr)-1:
-                    i = 0
-                    j += 1
-    return subArr
 
 #Find the determinant of a 2d array
 def subDet (arr):
@@ -91,14 +75,7 @@ def findDet (arr):
         subA = subArr(arr, top)
         prod1 = cProd(subA[0][0], subA[1][1])
         prod2 = cProd(subA[0][1], subA[1][0])
-        printArr(subA)
-        prod1.print()
-        print()
-        prod2.print()
-        print()
         prodDif = cDif(prod1, prod2)
-        prodDif.print()
-        print()
         detProd = cProd(arr[0][top], prodDif)
         if sign:
             det = cSum(det, detProd)
@@ -107,6 +84,23 @@ def findDet (arr):
             det = cDif(det, detProd)
             sign = True
     return det
+
+#
+def subArr(arr, exclude):
+    subArr = []
+    for i in range(len(arr)-1):
+        subArr.append([])
+    i = 0
+    j = 0
+    for x in range(len(arr[0])):
+        for y in range(1, len(arr)):
+            if x != exclude:
+                subArr[i].append(arr[y][x])
+                i += 1
+                if y == len(arr)-1:
+                    i = 0
+                    j += 1
+    return subArr
 
 #Return the DeterminantX array, to be divided by the determinant array
 def detArr(arr1, arr2, col):
@@ -148,6 +142,12 @@ imped = [   [ Complex(1,2), Complex(0,-2), Complex(-1,0) ],
             [ Complex(-1,0), Complex(0,3), Complex(1,-3) ]  ]
 volts = [ Polar(3, 0).conv(), Polar(0,0).conv(), Polar(6, 0).conv() ]
 sep = "-----------------------------------------"
+
+
+printArr(imped)
+printArr(volts)
+print('\n\n')
+
 #Determinant
 det = findDet(imped)
 detPol = det.conv()
